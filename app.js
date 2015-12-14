@@ -1,17 +1,36 @@
 var mt = require('mersenne-twister')
 
+var prng
+var codes
 var generator
 
 main()
 function main() {
     seed = process.argv[2]
+    setup(seed)
+
+    console.log(getBuffer(10000))
+}
+
+function setup(seed) {
     if (!seed) {
         console.log('no seed provided - using default seed')
         seed = 123
     }
-    generator = new mt(seed)
+    prng = new mt(seed)
 
-    console.log(getCharacterStream(10))
+    codes = getCommonCodes()
+
+    charGen = randomCharacterGen()
+}
+
+function getBuffer(size) {
+    var buffer = ''
+    var i = 0
+    while (i++ < size) {
+        buffer += charGen.next().value
+    }
+    return buffer
 }
 
 function getRange(from, to) {
@@ -31,19 +50,10 @@ function getCommonCodes() {
     return codes
 }
 
-function getCharacterStream(limit) {
-    var codes = getCommonCodes()
-    var characters = []
-    var i = 0
-    for (; i < limit; i++) {
-        characters.push(getRandomCharacter(codes))
+function* randomCharacterGen() {
+    while(true) {
+        var index = Math.floor(prng.random() * codes.length)
+        var code = codes[index]
+        yield String.fromCharCode(code)
     }
-
-    return characters
-}
-
-function getRandomCharacter(codes) {
-    var index = Math.floor(generator.random() * codes.length)
-    var code = codes[index]
-    return String.fromCharCode(code)
 }
