@@ -29,4 +29,20 @@ describe('random-character-stream', function() {
 
     })
 
+    context('when instantiated with an allowed character set', function() {
+        var stream
+
+        beforeEach(function() {
+            var charGen = charStream(123, [97, 98, 99])
+            stream = getBuffer(charGen, 100)
+        })
+
+        it('only returns characters from that set', function() {
+            for (i in stream) {
+                var character = stream[i]
+                assert.ok(['a', 'b', 'c'].indexOf(character) !== -1)
+            }
+        })
+
+    })
 })
