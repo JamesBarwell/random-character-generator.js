@@ -1,38 +1,5 @@
 var mt = require('mersenne-twister')
 
-var prng
-var codes
-var generator
-
-main()
-function main() {
-    seed = process.argv[2]
-    setup(seed)
-
-    console.log(getBuffer(10000))
-}
-
-function setup(seed) {
-    if (!seed) {
-        console.log('no seed provided - using default seed')
-        seed = 123
-    }
-    prng = new mt(seed)
-
-    codes = getCommonCodes()
-
-    charGen = randomCharacterGen()
-}
-
-function getBuffer(size) {
-    var buffer = ''
-    var i = 0
-    while (i++ < size) {
-        buffer += charGen.next().value
-    }
-    return buffer
-}
-
 function getRange(from, to) {
     var range = []
     for (;from <= to; from++) {
@@ -41,19 +8,23 @@ function getRange(from, to) {
     return range
 }
 
-function getCommonCodes() {
-    var codes = getRange(97, 122)
-    codes.push(32)
-    codes.push(33)
-    codes.push(44)
-    codes.push(46)
-    return codes
+function getAsciiCodes() {
+    return [].concat(
+        getRange(97,122),
+        [32,33,44,46]
+    )
 }
 
-function* randomCharacterGen() {
-    while(true) {
-        var index = Math.floor(prng.random() * codes.length)
-        var code = codes[index]
-        yield String.fromCharCode(code)
-    }
+function getCharacterGenerator(seed) {
+    var prng = new mt(seed)
+    var codes = getAsciiCodes()
+
+    return (function* randomCharacterGen() {
+        while(true) {
+            var index = Math.floor(prng.random() * codes.length)
+            yield String.fromCharCode(codes[index])
+        }
+    })()
 }
+
+module.exports = getCharacterGenerator
