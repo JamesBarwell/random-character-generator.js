@@ -19,8 +19,8 @@ describe('random-character-stream', function() {
             var charGen_1 = charStream(123)
             var charGen_2 = charStream(123)
 
-            stream_1 = getBuffer(charGen_1, 10)
-            stream_2 = getBuffer(charGen_2, 10)
+            stream_1 = getBuffer(charGen_1, 1000)
+            stream_2 = getBuffer(charGen_2, 1000)
         })
 
         it('always returns the same characters', function() {
@@ -34,7 +34,7 @@ describe('random-character-stream', function() {
 
         beforeEach(function() {
             var charGen = charStream(123, [97, 98, 99])
-            stream = getBuffer(charGen, 100)
+            stream = getBuffer(charGen, 1000)
         })
 
         it('only returns characters from that set', function() {
