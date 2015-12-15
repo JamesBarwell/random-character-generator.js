@@ -23,7 +23,8 @@ function getDefaultAsciiCodes() {
     }
 
     return [].concat(
-        getRange(97,122),
-        [32,33,44,46]
+        getRange(48, 57),   // 0-9
+        getRange(65, 122),  // A-Z a-z
+        [32,33,44,45,46,63] // /s ! , - . ?
     )
 }
