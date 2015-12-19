@@ -1,0 +1,30 @@
+{
+  "name": "random-character-generator",
+  "version": "0.1.0",
+  "description": "Generates random ASCII characters from a seed",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha",
+    "spec": "mocha -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JamesBarwell/random-character-generator.js.git"
+  },
+  "keywords": [
+      "random",
+      "pseudorandom",
+      "deterministic",
+      "character",
+      "ascii"
+  ],
+  "author": "James Barwell <jb@jamesbarwell.co.uk>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "mersenne-twister": "^1.0.1"
+  },
+  "devDependencies": {
+    "mocha": "2"
+  }
+}
